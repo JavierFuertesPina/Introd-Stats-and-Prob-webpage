@@ -41,9 +41,125 @@
     }
     .nav-left { display: flex; align-items: center; gap: .8rem; }
     .nav-brand { font-family: "Playfair Display", serif; font-size: .95rem; color: var(--accent2); letter-spacing: .03em; text-decoration: none; }
-    .nav-links { display: flex; gap: 2rem; }
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
     .nav-links a { font-size: .82rem; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: rgba(255,255,255,.65); text-decoration: none; transition: color .2s; }
     .nav-links a:hover { color: var(--accent2); }
+    /* nav auth pill */
+    .nav-auth-pill {
+      display: flex; align-items: center; gap: .5rem;
+      background: rgba(200,151,58,.15); border: 1px solid rgba(200,151,58,.35);
+      border-radius: 99px; padding: .3rem .85rem;
+      font-size: .78rem; font-weight: 600; color: var(--accent2);
+      cursor: pointer; transition: background .2s;
+    }
+    .nav-auth-pill:hover { background: rgba(200,151,58,.28); }
+    .nav-auth-pill.logged-in { background: rgba(46,160,67,.18); border-color: rgba(46,160,67,.4); color: #6fcf97; }
+    .nav-auth-pill svg { flex-shrink: 0; }
+
+    /* ── AUTH MODAL ── */
+    .auth-overlay {
+      display: none; position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,20,60,.7); backdrop-filter: blur(6px);
+      align-items: center; justify-content: center;
+    }
+    .auth-overlay.open { display: flex; }
+    .auth-modal {
+      background: var(--paper);
+      border-radius: 16px;
+      padding: 2.5rem;
+      width: min(480px, 92vw);
+      box-shadow: 0 24px 80px rgba(0,20,60,.35);
+      position: relative;
+      animation: modalIn .25s ease;
+    }
+    @keyframes modalIn {
+      from { opacity:0; transform: translateY(20px) scale(.97); }
+      to   { opacity:1; transform: none; }
+    }
+    .auth-modal-close {
+      position: absolute; top: 1rem; right: 1rem;
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); font-size: 1.3rem; line-height: 1;
+      padding: .2rem .5rem; border-radius: 4px; transition: background .2s;
+    }
+    .auth-modal-close:hover { background: var(--cream); }
+    .auth-modal-icon {
+      width: 52px; height: 52px;
+      background: rgba(200,151,58,.12);
+      border: 1px solid rgba(200,151,58,.3);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.2rem;
+    }
+    .auth-modal h2 {
+      font-family: "Playfair Display", serif;
+      font-size: 1.4rem; font-weight: 700;
+      text-align: center; margin-bottom: .5rem;
+    }
+    .auth-modal-sub {
+      font-size: .88rem; color: var(--slate);
+      text-align: center; margin-bottom: 1.8rem; line-height: 1.6;
+    }
+    .auth-modal-sub strong { color: var(--navy); }
+    .auth-input-group { display: flex; flex-direction: column; gap: .4rem; margin-bottom: 1rem; }
+    .auth-label { font-size: .73rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+    .auth-input {
+      font-family: "DM Sans", sans-serif; font-size: .92rem;
+      color: var(--navy); background: var(--cream);
+      border: 1.5px solid rgba(0,48,135,.18);
+      border-radius: 8px; padding: .7rem 1rem;
+      transition: border-color .2s, box-shadow .2s; outline: none; width: 100%;
+    }
+    .auth-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0,48,135,.1); }
+    .auth-input.error { border-color: #dc3545; box-shadow: 0 0 0 3px rgba(220,53,69,.1); }
+    .auth-error-msg {
+      display: none; font-size: .82rem; color: #dc3545;
+      background: rgba(220,53,69,.07);
+      border: 1px solid rgba(220,53,69,.2);
+      border-radius: 6px; padding: .6rem .9rem;
+      margin-bottom: .8rem; line-height: 1.5;
+    }
+    .auth-error-msg.show { display: block; }
+    .auth-btn {
+      width: 100%; background: var(--navy); color: #fff;
+      font-family: "DM Sans", sans-serif; font-size: .92rem; font-weight: 600;
+      padding: .8rem; border-radius: 8px; border: none;
+      cursor: pointer; transition: background .2s, transform .15s; margin-top: .3rem;
+    }
+    .auth-btn:hover { background: var(--blue); transform: translateY(-1px); }
+    .auth-divider { display: flex; align-items: center; gap: .75rem; margin: 1.2rem 0; }
+    .auth-divider::before, .auth-divider::after { content:""; flex:1; height:1px; background: rgba(0,48,135,.1); }
+    .auth-divider span { font-size: .75rem; color: var(--muted); }
+    .auth-switch { text-align: center; font-size: .83rem; color: var(--slate); }
+    .auth-switch button { background: none; border: none; cursor: pointer; color: var(--blue); font-weight: 600; text-decoration: underline; font-size: .83rem; }
+    .auth-allowed-domains {
+      background: rgba(0,48,135,.05); border: 1px solid rgba(0,48,135,.1);
+      border-radius: 8px; padding: .7rem 1rem; margin-bottom: 1.2rem;
+      font-size: .8rem; color: var(--slate); line-height: 1.6;
+    }
+    .auth-allowed-domains strong { color: var(--navy); display: block; margin-bottom: .2rem; font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; }
+    .auth-allowed-domains code { font-family: "DM Mono", monospace; background: rgba(0,48,135,.08); padding: .1rem .35rem; border-radius: 3px; font-size: .78rem; color: var(--blue); }
+    /* success state */
+    .auth-success { display: none; text-align: center; padding: .5rem 0 1rem; }
+    .auth-success svg { color: #2a8a50; display: block; margin: 0 auto .8rem; }
+    .auth-success h3 { font-family: "Playfair Display", serif; font-size: 1.2rem; margin-bottom: .4rem; }
+    .auth-success p { font-size: .88rem; color: var(--slate); }
+
+    /* ── DOWNLOAD GATE overlay on material cards ── */
+    .material-btns a.btn-pdf,
+    .material-btns a.btn-slides {
+      position: relative;
+    }
+    /* locked state indicator on nav */
+    .lock-badge {
+      display: inline-flex; align-items: center; gap: .3rem;
+      font-size: .7rem; font-weight: 600; letter-spacing: .06em;
+      text-transform: uppercase;
+      background: rgba(220,53,69,.1); color: #dc3545;
+      border: 1px solid rgba(220,53,69,.25);
+      border-radius: 99px; padding: .2rem .65rem;
+    }
+    .lock-badge.unlocked { background: rgba(46,160,67,.1); color: #2a8a50; border-color: rgba(46,160,67,.25); }
 
     /* ── HERO ── */
     .hero {
@@ -99,15 +215,6 @@
     .about-links { display: flex; flex-direction: column; gap: .55rem; }
     .about-link { display: flex; align-items: center; gap: .5rem; font-size: .82rem; color: var(--blue); text-decoration: none; justify-content: center; transition: color .2s; }
     .about-link:hover { color: var(--accent); }
-    /* ── LOGO LINKS ── */
-    .logo-links { display: flex; flex-direction: column; gap: .55rem; margin-top: 1.2rem; border-top: 1px solid rgba(0,48,135,.1); padding-top: 1.2rem; }
-    .logo-link-item { display: flex; align-items: center; gap: .75rem; text-decoration: none; transition: opacity .2s; }
-    .logo-link-item:hover { opacity: .75; }
-    .logo-link-icon { width: 38px; height: 38px; background: var(--cream); border: 1px solid rgba(0,48,135,.12); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; padding: 3px; }
-    .logo-link-icon img { width: 100%; height: 100%; object-fit: contain; }
-    .logo-link-text { display: flex; flex-direction: column; gap: .1rem; }
-    .logo-link-label { font-size: .82rem; font-weight: 600; color: var(--navy); }
-    .logo-link-sub { font-size: .72rem; color: var(--muted); }
     .about-text h3 { font-family: "Playfair Display", serif; font-size: 1.6rem; margin-bottom: .8rem; }
     .about-text p { color: var(--slate); margin-bottom: 1rem; font-size: .97rem; }
     .tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.2rem; }
@@ -131,6 +238,9 @@
     .btn-slides { background: rgba(0,48,135,.07); color: var(--blue); border: 1px solid rgba(0,48,135,.2); }
     .btn-slides:hover { background: var(--blue); color: #fff; }
     .btn-soon { background: rgba(122,143,173,.1); color: var(--muted); border: 1px solid rgba(122,143,173,.25); cursor: not-allowed; opacity: .65; pointer-events: none; }
+    /* locked button state */
+    .btn-locked { background: rgba(122,143,173,.1); color: var(--muted); border: 1px solid rgba(122,143,173,.25); cursor: pointer; }
+    .btn-locked:hover { background: rgba(0,48,135,.12); color: var(--blue); border-color: rgba(0,48,135,.3); transform: translateY(-1px); }
 
     /* ── SCHEDULE ── */
     #schedule { background: var(--paper); color: var(--navy); }
@@ -141,9 +251,6 @@
     .schedule-table td { padding: .9rem 1rem; color: var(--slate); border-bottom: 1px solid rgba(0,48,135,.08); vertical-align: top; }
     .schedule-table tr:hover td { background: rgba(0,48,135,.03); }
     .sched-mono { font-family: "DM Mono", monospace; font-size: .78rem; color: var(--blue); white-space: nowrap; }
-
-
-
 
     /* ── CONTACT ── */
     #contact { background: var(--paper); }
@@ -168,24 +275,15 @@
     .form-success { display: none; text-align: center; padding: 2rem; color: var(--blue); font-weight: 500; }
     .form-success svg { display: block; margin: 0 auto .8rem; color: #2a6e4a; }
 
-
     /* ── BOTTOM LOGOS STRIP ── */
-    #bottom-logos {
-      background: var(--paper);
-      border-top: 4px solid var(--accent);
-      border-bottom: 4px solid var(--accent);
-    }
-    .bottom-logos-row {
-      max-width: 1060px; margin: 0 auto;
-      display: flex; align-items: center; justify-content: center;
-      gap: 3rem; flex-wrap: wrap;
-      padding: 2rem 2rem;
-    }
+    #bottom-logos { background: var(--navy); border-top: 1px solid var(--accent); }
+    .bottom-logos-row { max-width: 1060px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 3rem; flex-wrap: wrap; padding: 2rem 2rem; }
     .bottom-logo-item { display: flex; align-items: center; text-decoration: none; transition: opacity .2s; }
     .bottom-logo-item img { height: 46px; width: auto; object-fit: contain; filter: brightness(0) invert(1); opacity: .7; transition: opacity .2s; }
     .bottom-logo-item:hover img { opacity: 1; }
     .bottom-logo-item.crema img { filter: none; opacity: .85; }
     .bottom-logo-item.crema:hover img { opacity: 1; }
+
     /* ── FOOTER ── */
     footer { background: var(--navy); border-top: 1px solid rgba(200,151,58,.15); padding: 2.2rem 2rem; }
     .footer-inner { max-width: 1060px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.2rem; }
@@ -199,7 +297,6 @@
       .nav-links { display: none; }
       .about-grid, .contact-grid { grid-template-columns: 1fr; }
       .form-row { grid-template-columns: 1fr; }
-      .hero-logos { gap: 1rem; }
     }
 
     /* ── SCROLL REVEAL ── */
@@ -208,6 +305,82 @@
   </style>
 </head>
 <body>
+
+<!-- ── AUTH MODAL ─────────────────────────────────────────────────── -->
+<div class="auth-overlay" id="authOverlay">
+  <div class="auth-modal">
+    <button class="auth-modal-close" onclick="closeAuth()" aria-label="Close">&times;</button>
+
+    <!-- Login view -->
+    <div id="authLogin">
+      <div class="auth-modal-icon">
+        <svg width="22" height="22" fill="none" stroke="var(--accent)" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </div>
+      <h2>Access Course Materials</h2>
+      <p class="auth-modal-sub">Please log in with your UC3M institutional email to download lecture notes and slides.</p>
+      <div class="auth-allowed-domains">
+        <strong>Allowed accounts</strong>
+        Students: <code>@alumnos.uc3m.es</code> &nbsp;·&nbsp; Faculty &amp; staff: <code>@eco.uc3m.es</code>
+      </div>
+      <div class="auth-input-group">
+        <label class="auth-label" for="loginEmail">UC3M Email</label>
+        <input class="auth-input" type="email" id="loginEmail" placeholder="100xxxxxx@alumnos.uc3m.es" autocomplete="email" />
+      </div>
+      <div class="auth-input-group">
+        <label class="auth-label" for="loginPass">Password</label>
+        <input class="auth-input" type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password" />
+      </div>
+      <div class="auth-error-msg" id="loginError"></div>
+      <button class="auth-btn" onclick="handleLogin()">Log In →</button>
+      <div class="auth-divider"><span>Don't have an account?</span></div>
+      <div class="auth-switch">
+        <button onclick="showRegister()">Create an account</button>
+      </div>
+    </div>
+
+    <!-- Register view -->
+    <div id="authRegister" style="display:none;">
+      <div class="auth-modal-icon">
+        <svg width="22" height="22" fill="none" stroke="var(--accent)" stroke-width="2" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+      </div>
+      <h2>Create Account</h2>
+      <p class="auth-modal-sub">Register with your <strong>UC3M institutional email</strong> to access course materials.</p>
+      <div class="auth-allowed-domains">
+        <strong>Allowed accounts</strong>
+        Students: <code>@alumnos.uc3m.es</code> &nbsp;·&nbsp; Faculty &amp; staff: <code>@eco.uc3m.es</code>
+      </div>
+      <div class="auth-input-group">
+        <label class="auth-label" for="regName">Full Name</label>
+        <input class="auth-input" type="text" id="regName" placeholder="Your full name" />
+      </div>
+      <div class="auth-input-group">
+        <label class="auth-label" for="regEmail">UC3M Email</label>
+        <input class="auth-input" type="email" id="regEmail" placeholder="100xxxxxx@alumnos.uc3m.es" />
+      </div>
+      <div class="auth-input-group">
+        <label class="auth-label" for="regPass">Password</label>
+        <input class="auth-input" type="password" id="regPass" placeholder="Choose a password (min. 6 chars)" />
+      </div>
+      <div class="auth-error-msg" id="regError"></div>
+      <button class="auth-btn" onclick="handleRegister()">Create Account →</button>
+      <div class="auth-divider"><span>Already have an account?</span></div>
+      <div class="auth-switch">
+        <button onclick="showLogin()">Log in instead</button>
+      </div>
+    </div>
+
+    <!-- Success view -->
+    <div id="authSuccess" style="display:none;">
+      <div class="auth-success" style="display:block;">
+        <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <h3>You're in!</h3>
+        <p id="authSuccessMsg">You now have access to all course materials.</p>
+      </div>
+      <button class="auth-btn" onclick="closeAuth()" style="margin-top:.5rem;">Go to Materials →</button>
+    </div>
+
+  </div>
+</div>
 
 <!-- NAV -->
 <nav>
@@ -219,13 +392,16 @@
     <a href="#materials">Materials</a>
     <a href="#about">Instructor</a>
     <a href="#contact">Contact</a>
+    <button class="nav-auth-pill" id="navAuthBtn" onclick="openAuth()">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <span id="navAuthLabel">Log in</span>
+    </button>
   </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
-
     <div class="hero-badge">
       <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><circle cx="6" cy="6" r="5"/></svg>
       UC3M · Master CREMA · 2026–27
@@ -251,9 +427,9 @@
       Access Course Materials
     </a>
   </div>
-  </section>
+</section>
 
-  <!-- SCHEDULE -->
+<!-- SCHEDULE -->
 <section id="schedule">
   <div class="section-inner">
     <div class="reveal">
@@ -290,7 +466,7 @@
       <div class="section-label">Course Content</div>
       <div class="gold-line"></div>
       <h2 class="section-title">Lecture Notes &amp; Slides</h2>
-      <p class="section-desc">Below, you can find the lecture notes for each unit. If you have any questions, or if you find any typos in the notes or slides, please feel free to reach out to me </p>
+      <p class="section-desc">Below, you can find the lecture notes for each unit. If you have any questions, or if you find any typos, please feel free to reach out.</p>
     </div>
     <div class="materials-grid">
 
@@ -299,10 +475,10 @@
         <div class="material-title">Probability Foundations</div>
         <div class="material-desc">Sample spaces, events, axioms of probability, counting rules, conditional probability and independence.</div>
         <div class="material-btns">
-          <a class="btn btn-pdf" href="Unit_1____Probability_Foundations.pdf" target="_blank">
+          <a class="btn btn-pdf" data-href="Unit_1____Probability_Foundations.pdf" onclick="gatedDownload(event,this)">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Notes (PDF)
           </a>
-          <a class="btn btn-slides" href="Unit_1____Probability_Foundations_slides.pdf" target="_blank">
+          <a class="btn btn-slides" data-href="Unit_1____Probability_Foundations_slides.pdf" onclick="gatedDownload(event,this)">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Slides
           </a>
         </div>
@@ -313,10 +489,10 @@
         <div class="material-title">Random Variables &amp; Univariate Distributions</div>
         <div class="material-desc">Bayes' theorem, random variables, probability mass and density functions, the c.d.f.</div>
         <div class="material-btns">
-          <a class="btn btn-pdf" href="Unit_2____Random_Variables.pdf" target="_blank">
+          <a class="btn btn-pdf" data-href="Unit_2____Random_Variables.pdf" onclick="gatedDownload(event,this)">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Notes (PDF)
           </a>
-          <a class="btn btn-slides" href="Unit_2____Random_Variables_slides.pdf" target="_blank">
+          <a class="btn btn-slides" data-href="Unit_2____Random_Variables_slides.pdf" onclick="gatedDownload(event,this)">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Slides
           </a>
         </div>
@@ -327,10 +503,10 @@
         <div class="material-title">Joint, Marginal &amp; Conditional Distributions</div>
         <div class="material-desc">Two random variables: joint p.m.f./p.d.f., marginals, independence, and conditional distributions.</div>
         <div class="material-btns">
-          <a class="btn btn-pdf" href="Unit_3____Joint__Marginal__Conditional.pdf" target="_blank">
+          <a class="btn btn-pdf" data-href="Unit_3____Joint__Marginal__Conditional.pdf" onclick="gatedDownload(event,this)">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Notes (PDF)
           </a>
-          <a class="btn btn-slides" href="Unit_3____Joint__Marginal__Conditional_slides.pdf" target="_blank">
+          <a class="btn btn-slides" data-href="Unit_3____Joint__Marginal__Conditional_slides.pdf" onclick="gatedDownload(event,this)">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Slides
           </a>
         </div>
@@ -341,10 +517,10 @@
         <div class="material-title">Expectation, Variance &amp; Higher Moments</div>
         <div class="material-desc">Mean and median, linearity, Jensen's inequality, variance, standard deviation, skewness and kurtosis.</div>
         <div class="material-btns">
-          <a class="btn btn-pdf" href="Unit_4____Expectation__Variance__Moments.pdf" target="_blank">
+          <a class="btn btn-pdf" data-href="Unit_4____Expectation__Variance__Moments.pdf" onclick="gatedDownload(event,this)">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Notes (PDF)
           </a>
-          <a class="btn btn-slides" href="Unit_4____Expectation__Variance__Moments_slides.pdf" target="_blank">
+          <a class="btn btn-slides" data-href="Unit_4____Expectation__Variance__Moments_slides.pdf" onclick="gatedDownload(event,this)">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Slides
           </a>
         </div>
@@ -355,10 +531,10 @@
         <div class="material-title">Covariance, Conditional Expectation &amp; Random Vectors</div>
         <div class="material-desc">Covariance, correlation, the conditional expectation function (CEF), and extension to random vectors.</div>
         <div class="material-btns">
-          <a class="btn btn-pdf" href="Unit_5____Covariance__CEF__Random_Vectors.pdf" target="_blank">
+          <a class="btn btn-pdf" data-href="Unit_5____Covariance__CEF__Random_Vectors.pdf" onclick="gatedDownload(event,this)">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Notes (PDF)
           </a>
-          <a class="btn btn-slides" href="Unit_5____Covariance__CEF__Random_Vectors_slides.pdf" target="_blank">
+          <a class="btn btn-slides" data-href="Unit_5____Covariance__CEF__Random_Vectors_slides.pdf" onclick="gatedDownload(event,this)">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Slides
           </a>
         </div>
@@ -369,10 +545,10 @@
         <div class="material-title">Special Distributions incl. Multivariate Normal</div>
         <div class="material-desc">Bernoulli, Binomial, Poisson, Uniform, Exponential, Normal, χ², t, F, and the multivariate normal.</div>
         <div class="material-btns">
-          <a class="btn btn-pdf" href="Unit_6____Special_Distributions.pdf" target="_blank">
+          <a class="btn btn-pdf" data-href="Unit_6____Special_Distributions.pdf" onclick="gatedDownload(event,this)">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Notes (PDF)
           </a>
-          <a class="btn btn-slides" href="Unit_6____Special_Distributions_slides.pdf" target="_blank">
+          <a class="btn btn-slides" data-href="Unit_6____Special_Distributions_slides.pdf" onclick="gatedDownload(event,this)">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Slides
           </a>
         </div>
@@ -383,10 +559,10 @@
         <div class="material-title">Law of Large Numbers &amp; Central Limit Theorem</div>
         <div class="material-desc">Convergence concepts, weak and strong LLN, the CLT and its applications, the Delta method.</div>
         <div class="material-btns">
-          <a class="btn btn-pdf" href="Unit_7____LLN_and_CLT.pdf" target="_blank">
+          <a class="btn btn-pdf" data-href="Unit_7____LLN_and_CLT.pdf" onclick="gatedDownload(event,this)">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Notes (PDF)
           </a>
-          <a class="btn btn-slides" href="Unit_7____LLN_and_CLT_slides.pdf" target="_blank">
+          <a class="btn btn-slides" data-href="Unit_7____LLN_and_CLT_slides.pdf" onclick="gatedDownload(event,this)">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Slides
           </a>
         </div>
@@ -397,10 +573,10 @@
         <div class="material-title">Point Estimation: MLE &amp; OLS</div>
         <div class="material-desc">Estimators and their sampling distribution; bias, consistency, efficiency; the simple linear regression model and OLS.</div>
         <div class="material-btns">
-          <a class="btn btn-pdf" href="Unit_8____Point_Estimation.pdf" target="_blank">
+          <a class="btn btn-pdf" data-href="Unit_8____Point_Estimation.pdf" onclick="gatedDownload(event,this)">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Notes (PDF)
           </a>
-          <a class="btn btn-slides" href="Unit_8____Point_Estimation_slides.pdf" target="_blank">
+          <a class="btn btn-slides" data-href="Unit_8____Point_Estimation_slides.pdf" onclick="gatedDownload(event,this)">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Slides
           </a>
         </div>
@@ -411,10 +587,10 @@
         <div class="material-title">Confidence Intervals &amp; Hypothesis Testing</div>
         <div class="material-desc">CIs, hypothesis tests, p-values, and inference on the OLS slope.</div>
         <div class="material-btns">
-          <a class="btn btn-pdf" href="Unit_9____CIs__Tests__Inference_on.pdf" target="_blank">
+          <a class="btn btn-pdf" data-href="Unit_9____CIs__Tests__Inference_on.pdf" onclick="gatedDownload(event,this)">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Notes (PDF)
           </a>
-          <a class="btn btn-slides" href="Unit_9____CIs__Tests__Inference_on_slides.pdf" target="_blank">
+          <a class="btn btn-slides" data-href="Unit_9____CIs__Tests__Inference_on_slides.pdf" onclick="gatedDownload(event,this)">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Slides
           </a>
         </div>
@@ -423,8 +599,6 @@
     </div>
   </div>
 </section>
-
-
 
 <!-- ABOUT -->
 <section id="about">
@@ -465,7 +639,6 @@
     </div>
   </div>
 </section>
-
 
 <!-- CONTACT -->
 <section id="contact">
@@ -540,45 +713,250 @@
   </div>
 </section>
 
-
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    
-   
-    <div class="bottom-logos-row">
-    <a class="bottom-logo-item crema" href="https://www.uc3m.es" target="_blank" rel="noopener">
+<!-- BOTTOM LOGOS -->
+<section id="bottom-logos">
+  <div class="bottom-logos-row">
+    <a class="bottom-logo-item" href="https://www.uc3m.es" target="_blank" rel="noopener">
       <img src="logo ucem grande.png" alt="Universidad Carlos III de Madrid" />
     </a>
     <a class="bottom-logo-item crema" href="https://www.uc3m.es/master/crema-es" target="_blank" rel="noopener">
       <img src="logo crema.png" alt="CReMa UC3M" />
     </a>
-    <a class="bottom-logo-item crema" href="https://www.uc3m.es/postgrado/inicio" target="_blank" rel="noopener">
+    <a class="bottom-logo-item" href="https://www.uc3m.es/postgrado/inicio" target="_blank" rel="noopener">
       <img src="logo uc3m master.jpg" alt="UC3M Master" />
     </a>
   </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-copy">© 2026 Javier Fuertes Pina · Universidad Carlos III de Madrid</div>
+    <div class="footer-links">
+      <a href="https://www.uc3m.es/master/crema-es" target="_blank" rel="noopener">Master CREMA</a>
+      <a href="https://javierfuertespina.github.io/" target="_blank" rel="noopener">Instructor</a>
+      <a href="mailto:jfuertes@eco.uc3m.es">Contact</a>
+    </div>
   </div>
 </footer>
 
 <script>
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible"); });
-  }, { threshold: 0.1 });
-  document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+/* ══════════════════════════════════════════════════════════════
+   AUTH SYSTEM
+   - Accounts stored in localStorage (key: "crema_accounts")
+   - Session stored in sessionStorage (key: "crema_session")
+   - Allowed domains: @alumnos.uc3m.es and @eco.uc3m.es
+   ══════════════════════════════════════════════════════════════ */
 
-  function submitForm() {
-    const name  = document.getElementById("fname").value.trim();
-    const email = document.getElementById("femail").value.trim();
-    const subj  = document.getElementById("fsubject").value;
-    const msg   = document.getElementById("fmsg").value.trim();
-    if (!name || !email || !msg) { alert("Please fill in your name, email, and message."); return; }
-    const body = encodeURIComponent("Name: " + name + "\nEmail: " + email + "\n\n" + msg);
-    const sub  = encodeURIComponent(subj || "Course Query – Prob & Stats CREMA");
-    window.location.href = "mailto:jfuertes@eco.uc3m.es?subject=" + sub + "&body=" + body;
-    document.getElementById("formArea").style.display    = "none";
-    document.getElementById("formSuccess").style.display = "block";
+const ALLOWED_DOMAINS = ['@alumnos.uc3m.es', '@eco.uc3m.es'];
+let pendingDownload = null; // stores href to open after login
+
+/* ── helpers ── */
+function isAllowedEmail(email) {
+  email = email.toLowerCase().trim();
+  return ALLOWED_DOMAINS.some(d => email.endsWith(d));
+}
+function getAccounts() {
+  try { return JSON.parse(localStorage.getItem('crema_accounts') || '{}'); } catch(e) { return {}; }
+}
+function saveAccounts(obj) {
+  localStorage.setItem('crema_accounts', JSON.stringify(obj));
+}
+function getSession() {
+  return sessionStorage.getItem('crema_session');
+}
+function setSession(email) {
+  sessionStorage.setItem('crema_session', email);
+}
+function clearSession() {
+  sessionStorage.removeItem('crema_session');
+}
+function simpleHash(str) {
+  // simple non-crypto hash — adequate for a course page gate
+  let h = 0;
+  for (let i = 0; i < str.length; i++) { h = (Math.imul(31, h) + str.charCodeAt(i)) | 0; }
+  return h.toString(36);
+}
+
+/* ── modal open / close ── */
+function openAuth(forDownload) {
+  if (forDownload) pendingDownload = forDownload;
+  document.getElementById('authOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  // reset to login view
+  showLogin();
+}
+function closeAuth() {
+  document.getElementById('authOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+  pendingDownload = null;
+}
+// close on overlay click
+document.getElementById('authOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeAuth();
+});
+// close on Escape
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeAuth();
+});
+
+/* ── view switching ── */
+function showLogin() {
+  document.getElementById('authLogin').style.display = '';
+  document.getElementById('authRegister').style.display = 'none';
+  document.getElementById('authSuccess').style.display = 'none';
+  clearError('loginError'); clearError('regError');
+}
+function showRegister() {
+  document.getElementById('authLogin').style.display = 'none';
+  document.getElementById('authRegister').style.display = '';
+  document.getElementById('authSuccess').style.display = 'none';
+  clearError('loginError'); clearError('regError');
+}
+function showSuccess(msg) {
+  document.getElementById('authLogin').style.display = 'none';
+  document.getElementById('authRegister').style.display = 'none';
+  document.getElementById('authSuccess').style.display = '';
+  document.getElementById('authSuccessMsg').textContent = msg;
+}
+
+/* ── error helpers ── */
+function showError(id, msg) {
+  const el = document.getElementById(id);
+  el.textContent = msg; el.classList.add('show');
+}
+function clearError(id) {
+  const el = document.getElementById(id);
+  el.textContent = ''; el.classList.remove('show');
+}
+
+/* ── register ── */
+function handleRegister() {
+  const name  = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim().toLowerCase();
+  const pass  = document.getElementById('regPass').value;
+  clearError('regError');
+
+  if (!name)  return showError('regError', 'Please enter your full name.');
+  if (!email) return showError('regError', 'Please enter your email address.');
+  if (!isAllowedEmail(email)) {
+    return showError('regError',
+      'This email domain is not allowed. Please use your @alumnos.uc3m.es or @eco.uc3m.es account.');
   }
+  if (pass.length < 6) return showError('regError', 'Password must be at least 6 characters.');
+
+  const accounts = getAccounts();
+  if (accounts[email]) return showError('regError', 'An account with this email already exists. Please log in.');
+
+  accounts[email] = { name, hash: simpleHash(pass) };
+  saveAccounts(accounts);
+  setSession(email);
+  updateNavAuth(email);
+  showSuccess('Welcome, ' + name.split(' ')[0] + '! Your account has been created.');
+  // delay close + trigger download
+  setTimeout(() => { closeAuth(); if (pendingDownload) { window.open(pendingDownload, '_blank'); pendingDownload = null; } }, 1600);
+}
+
+/* ── login ── */
+function handleLogin() {
+  const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+  const pass  = document.getElementById('loginPass').value;
+  clearError('loginError');
+
+  if (!email) return showError('loginError', 'Please enter your email address.');
+  if (!isAllowedEmail(email)) {
+    return showError('loginError',
+      'This email domain is not allowed. Only @alumnos.uc3m.es and @eco.uc3m.es accounts can access course materials.');
+  }
+  if (!pass) return showError('loginError', 'Please enter your password.');
+
+  const accounts = getAccounts();
+  if (!accounts[email]) {
+    return showError('loginError', 'No account found for this email. Please register first.');
+  }
+  if (accounts[email].hash !== simpleHash(pass)) {
+    return showError('loginError', 'Incorrect password. Please try again.');
+  }
+
+  setSession(email);
+  updateNavAuth(email);
+  const name = accounts[email].name.split(' ')[0];
+  showSuccess('Welcome back, ' + name + '! You now have access to all course materials.');
+  setTimeout(() => { closeAuth(); if (pendingDownload) { window.open(pendingDownload, '_blank'); pendingDownload = null; } }, 1400);
+}
+
+/* ── logout ── */
+function handleLogout() {
+  clearSession();
+  updateNavAuth(null);
+}
+
+/* ── nav pill update ── */
+function updateNavAuth(email) {
+  const btn   = document.getElementById('navAuthBtn');
+  const label = document.getElementById('navAuthLabel');
+  if (email) {
+    btn.classList.add('logged-in');
+    btn.onclick = handleLogout;
+    label.textContent = email.split('@')[0];
+    // update icon to checkmark
+    btn.querySelector('svg').innerHTML = '<path d="M20 6L9 17l-5-5"/>';
+    btn.querySelector('svg').setAttribute('viewBox','0 0 24 24');
+  } else {
+    btn.classList.remove('logged-in');
+    btn.onclick = openAuth;
+    label.textContent = 'Log in';
+    btn.querySelector('svg').innerHTML = '<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>';
+  }
+}
+
+/* ── gated download ── */
+function gatedDownload(event, el) {
+  event.preventDefault();
+  const href = el.getAttribute('data-href');
+  if (getSession()) {
+    window.open(href, '_blank');
+  } else {
+    openAuth(href);
+  }
+}
+
+/* ── init on page load ── */
+(function init() {
+  const session = getSession();
+  if (session) updateNavAuth(session);
+})();
+
+/* ── enter key support in auth forms ── */
+document.getElementById('loginPass').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') handleLogin();
+});
+document.getElementById('regPass').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') handleRegister();
+});
+document.getElementById('loginEmail').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') handleLogin();
+});
+
+/* ── scroll reveal ── */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible"); });
+}, { threshold: 0.1 });
+document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+
+/* ── contact form ── */
+function submitForm() {
+  const name  = document.getElementById("fname").value.trim();
+  const email = document.getElementById("femail").value.trim();
+  const subj  = document.getElementById("fsubject").value;
+  const msg   = document.getElementById("fmsg").value.trim();
+  if (!name || !email || !msg) { alert("Please fill in your name, email, and message."); return; }
+  const body = encodeURIComponent("Name: " + name + "\nEmail: " + email + "\n\n" + msg);
+  const sub  = encodeURIComponent(subj || "Course Query – Prob & Stats CREMA");
+  window.location.href = "mailto:jfuertes@eco.uc3m.es?subject=" + sub + "&body=" + body;
+  document.getElementById("formArea").style.display    = "none";
+  document.getElementById("formSuccess").style.display = "block";
+}
 </script>
 </body>
 </html>
